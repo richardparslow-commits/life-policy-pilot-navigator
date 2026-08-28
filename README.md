@@ -26,3 +26,25 @@ Cloud + wiring): see **DEPLOYMENT.md**.
 
     pip install -r requirements-dev.txt
     python -m pytest tests/ -q
+
+### End-to-end tests (real backend + Navigator)
+
+`tests/test_integration.py` boots the actual backend (uvicorn subprocess)
+and drives it with the real API client and Streamlit UI — no mocking on the
+backend side. CI runs it in a separate `integration` job that needs read
+access to the private backend repo:
+
+1. Create a fine-grained PAT (GitHub → Settings → Developer settings →
+   Fine-grained personal access tokens): repository access **only**
+   `richardparslow-commits/life-policy-pilot-backend`, with
+   **Contents: Read-only** (Metadata read-only comes automatically).
+2. Add it as a repository secret named `BACKEND_REPO_TOKEN` in **this** repo
+   (Settings → Secrets and variables → Actions).
+3. The `integration` job activates on the next push; it is skipped until the
+   secret exists, so CI never breaks while it is missing.
+
+Run locally (requires a backend checkout):
+
+    BACKEND_PATH=../life-policy-pilot-backend \
+    BACKEND_PYTHON=../life-policy-pilot-backend/.venv/bin/python \
+    python -m pytest tests/test_integration.py -q

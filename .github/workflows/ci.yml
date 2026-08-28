@@ -23,3 +23,35 @@ jobs:
 
       - name: Run tests
         run: python -m pytest tests/ -q
+
+  integration:
+    # Boots the real backend and drives the Navigator against it. Needs read
+    # access to the private backend repo; skipped until the BACKEND_REPO_TOKEN
+    # secret is configured (see README, Testing section).
+    runs-on: ubuntu-latest
+    if: ${{ secrets.BACKEND_REPO_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout backend repo (read-only PAT)
+        uses: actions/checkout@v4
+        with:
+          repository: richardparslow-commits/life-policy-pilot-backend
+          token: ${{ secrets.BACKEND_REPO_TOKEN }}
+          path: backend
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+          pip install -r backend/requirements.txt
+
+      - name: Run integration tests (real backend + Navigator)
+        run: python -m pytest tests/test_integration.py -q
+        env:
+          BACKEND_PATH: backend
