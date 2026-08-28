@@ -2,6 +2,12 @@
 
 This app is two pieces that must both be live and wired together:
 
+> **✅ Currently deployed (live)**
+> - **Backend:** https://life-policy-pilot-backend-1.onrender.com (Render)
+> - **Frontend:** https://life-policy-pilot-navigator1984.streamlit.app (Streamlit Cloud)
+> - Right now `ALLOWED_ORIGINS` on Render includes the blog, the legacy app,
+>   and the live `1984` app; `BACKEND_URL` is set to the live backend.
+
 1. **Backend** — `richardparslow-commits/life-policy-pilot-backend` (FastAPI FAQ service)
 2. **Frontend** — this repo (`life-policy-pilot-navigator`, Streamlit chat UI)
 
@@ -35,6 +41,7 @@ builds):
    | `ALLOWED_ORIGINS` | `https://lifepolicypilot.blog,https://www.lifepolicypilot.blog,https://<your-app-name>.streamlit.app` |
    | `ADMIN_TOKEN` | (optional) a long random string if you want to use `/admin/refresh-articles` |
 6. Deploy. Note the service URL, e.g. `https://life-policy-pilot-backend.onrender.com`.
+   **Live instance:** `https://life-policy-pilot-backend-1.onrender.com`.
 7. Verify: `curl https://<your-service>.onrender.com/health` → `{"ok": true, "kb_items": 48, ...}`.
 
 > **Free tier note:** Render free web services sleep after ~15 minutes idle and
@@ -48,18 +55,24 @@ builds):
 2. Go to https://share.streamlit.io (or the Streamlit dashboard) → **Create app**.
 3. Pick the repo, branch `main`, main file `streamlit_app.py` → **Deploy**.
 4. Note the app URL, e.g. `https://life-policy-pilot-navigator.streamlit.app`.
+   **Live instance:** `https://life-policy-pilot-navigator1984.streamlit.app` (the
+   default name was taken, so the app was deployed under the `1984` suffix;
+   display name in Streamlit remains the repo name).
 
-## 3. Wire them together
+## 3. Wire them together (current live values in bold)
 
-1. **Backend → allow the frontend:** if the Streamlit app URL differs from the
-   default allowlist, edit `ALLOWED_ORIGINS` on Render to include
+1. **Backend → allow the frontend:** edit `ALLOWED_ORIGINS` on Render to include
    `https://<your-app-name>.streamlit.app` and redeploy (or just save — Render
-   redeploys on env change).
+   redeploys on env change). **Currently set to:**
+   `https://lifepolicypilot.blog,https://www.lifepolicypilot.blog,
+   https://life-policy-pilot-navigator.streamlit.app,
+   https://life-policy-pilot-navigator1984.streamlit.app`
 2. **Frontend → point at the backend:** in Streamlit Cloud, open the app →
    **Settings → Secrets** and add:
    ```toml
    BACKEND_URL = "https://<your-service>.onrender.com"
    ```
+   **Currently set to:** `https://life-policy-pilot-backend-1.onrender.com`
    The app restarts automatically with the new secret.
 3. Verify end-to-end: open the app, ask "what is term life insurance", and
    confirm you get the FAQ answer plus recommended articles.

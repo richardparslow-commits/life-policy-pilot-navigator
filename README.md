@@ -22,6 +22,11 @@ Point the app at your backend by creating `.streamlit/secrets.toml`
 Full two-sided runbook (backend on Render + frontend on Streamlit Community
 Cloud + wiring): see **DEPLOYMENT.md**.
 
+**Live deployment (current):**
+- Frontend: https://life-policy-pilot-navigator1984.streamlit.app
+- Backend: https://life-policy-pilot-backend-1.onrender.com
+  (`BACKEND_URL` secret ⇒ `ALLOWED_ORIGINS` allowlist — both wired)
+
 ## Test
 
     pip install -r requirements-dev.txt
