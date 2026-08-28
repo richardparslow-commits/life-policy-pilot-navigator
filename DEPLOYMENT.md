@@ -13,22 +13,29 @@ allowlist. Both must be configured.
 
 ## 1. Deploy the backend (Render)
 
-The backend repo already has a `Procfile` (`uvicorn app:app --host 0.0.0.0 --port $PORT`),
-`runtime.txt` (Python 3.12.9), and a fixed `Dockerfile` — it is deployment-ready.
+The backend repo is deployment-ready: `Procfile` start command, `.python-version`
+(bare `3.12.9`, which Render's native runtime reads), and a fixed `Dockerfile`
+as an alternative. Recommended path — **Native (Python) runtime** (fast wheel
+builds):
 
 1. Go to https://dashboard.render.com → **New → Web Service**.
 2. Connect the `richardparslow-commits/life-policy-pilot-backend` repo.
-3. Render auto-detects the Procfile; if asked for a start command, use:
+3. Choose the **Native** (Python) environment. Render pre-fills the start
+   command from the `Procfile`; it must be:
    ```
    uvicorn app:app --host 0.0.0.0 --port $PORT
    ```
-4. Add the environment variables (everything else has a sane default):
+   (The `Dockerfile` route also works if you prefer Docker; both were fixed
+   and verified.)
+4. Optionally set `PYTHON_VERSION=3.12.9` (belt-and-suspenders; the repo's
+   `.python-version` already pins it).
+5. Add the environment variables (everything else has a sane default):
    | Variable | Value |
    |---|---|
    | `ALLOWED_ORIGINS` | `https://lifepolicypilot.blog,https://www.lifepolicypilot.blog,https://<your-app-name>.streamlit.app` |
    | `ADMIN_TOKEN` | (optional) a long random string if you want to use `/admin/refresh-articles` |
-5. Deploy. Note the service URL, e.g. `https://life-policy-pilot-backend.onrender.com`.
-6. Verify: `curl https://<your-service>.onrender.com/health` → `{"ok": true, ...}`.
+6. Deploy. Note the service URL, e.g. `https://life-policy-pilot-backend.onrender.com`.
+7. Verify: `curl https://<your-service>.onrender.com/health` → `{"ok": true, "kb_items": 48, ...}`.
 
 > **Free tier note:** Render free web services sleep after ~15 minutes idle and
 > take 30–60s to cold-start. The frontend retries once with a 30s timeout, so
