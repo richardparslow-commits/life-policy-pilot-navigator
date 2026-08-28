@@ -1,5 +1,7 @@
 # Life Policy Pilot Navigator (Streamlit frontend)
 
+[![CI](https://github.com/richardparslow-commits/life-policy-pilot-navigator/actions/workflows/ci.yml/badge.svg)](https://github.com/richardparslow-commits/life-policy-pilot-navigator/actions/workflows/ci.yml)
+
 Chat frontend for the Life Policy Pilot FAQ backend
 (`richardparslow-commits/life-policy-pilot-backend`). It sends questions
 to the backend `/chat` endpoint and renders the answer, related FAQs,
