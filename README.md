@@ -7,6 +7,27 @@ Chat frontend for the Life Policy Pilot FAQ backend
 to the backend `/chat` endpoint and renders the answer, related FAQs,
 recommended blog articles, and the consultation booking link.
 
+## About
+
+**Life Policy Pilot Navigator** is a conversational life-insurance guide:
+ask a question and it answers from a curated knowledge base, showing which
+FAQs it drew from and recommending related LifePolicyPilot.blog articles.
+It covers policy types (term, whole life, universal, IUL, return-of-premium),
+cost and coverage, claims and beneficiaries, health-related qualifying
+(diabetes, cancer survivors, veterans/VGLI, pre-existing conditions), cash
+value, riders, and Texas-specific rules — and describes what each of the
+**17 carriers** on the SFG Carrier Quotes panel sells and what each product
+is for (term, whole life, IUL, annuities, final expense, mortgage
+protection, and more).
+
+Every answer carries a "general information, not financial/legal/tax
+advice" disclaimer and a consultation booking link, and a privacy guardrail
+keeps the chat from collecting SSNs, bank/card numbers, or ID details.
+
+The frontend talks to the FastAPI backend in this project's companion repo
+(`richardparslow-commits/life-policy-pilot-backend`); see **Deploy** below
+for the two live pieces and how they are wired together.
+
 ## Run locally
 
     pip install -r requirements.txt
