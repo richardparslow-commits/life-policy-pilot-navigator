@@ -16,6 +16,17 @@ from api_client import BackendError, chat
 PRIMARY_RED = "#CC0700"
 SILVER_GRAY = "#E2E8F0"
 
+# Where to send users who want to reach out for an appointment.
+CONTACT_PAGE_URL = "https://lifepolicypilot.blog/contact-2/"
+
+EDUCATIONAL_NOTICE = (
+    "Educational use only. This tool is provided for educational and informational "
+    "purposes only. It is not financial, legal, or tax advice, and it is not a "
+    "recommendation to buy or sell any insurance product. Policy terms, availability, "
+    "and rates vary by insurer and state and change over time. Please speak with a "
+    "licensed professional about your own situation."
+)
+
 st.set_page_config(
     page_title="Life Policy Pilot | Navigator",
     page_icon="🧭",
@@ -83,18 +94,28 @@ def render_faq_matches(matched: List[Dict[str, Any]]) -> None:
             st.markdown("---")
 
 
+def render_educational_cta() -> None:
+    """End-of-answer footer: encourage reaching out, with an appointment button
+    to the contact page and a legal educational-print disclaimer."""
+    st.markdown("---")
+    st.markdown(
+        "**Have questions, or ready to talk through your life insurance "
+        "options?** I'd be glad to help — reach out to set up an appointment."
+    )
+    st.link_button("📅 Book a consultation", CONTACT_PAGE_URL)
+    st.caption(EDUCATIONAL_NOTICE)
+
+
 def render_assistant_message(msg: Dict[str, Any]) -> None:
     with st.chat_message("assistant"):
         st.markdown(msg["content"])
         meta = msg.get("meta", {})
-        booking = meta.get("booking_url")
-        if booking:
-            st.link_button("📅 Schedule a consultation", booking)
         disclaimer = meta.get("disclaimer")
         if disclaimer:
             st.caption(disclaimer)
         render_faq_matches(meta.get("matched_faq", []))
         render_article_links(meta.get("recommended_articles", []))
+        render_educational_cta()
 
 
 def send_message(text: str) -> None:

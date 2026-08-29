@@ -74,7 +74,10 @@ def test_chat_renders_answer_and_meta() -> None:
 
     rendered = [m.value for m in at.markdown]
     assert SAMPLE_RESPONSE["answer"] in rendered
-    assert any("Schedule a consultation" in label for label in booking_link_labels(at))
+    # Every answer ends with a CTA button to the contact page.
+    assert any("Book a consultation" in label for label in booking_link_labels(at))
+    assert any("Have questions" in m.value for m in at.markdown)
+    assert any("Educational use only" in c.value for c in at.caption)
     assert any("Related FAQs" in e.label for e in at.expander)
     assert any("Recommended articles" in e.label for e in at.expander)
 
