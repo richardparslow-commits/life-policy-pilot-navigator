@@ -175,7 +175,7 @@ with st.sidebar:
     )
 
 # ----------------------- Header -----------------------
-st.title("🇺🇸 Life Policy Pilot Navigator")
+st.title("🇺🇸 Life Policy Pilot Navigator ⭐")
 st.caption("Interactive navigation & guidance for life insurance concepts.")
 
 # ----------------------- Chat -----------------------
