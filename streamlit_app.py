@@ -175,7 +175,23 @@ with st.sidebar:
     )
 
 # ----------------------- Header -----------------------
-st.title("🇺🇸 Life Policy Pilot Navigator ⭐")
+# The main header is rendered as HTML so the actual Texas state flag (inline
+# SVG, since there is no state-flag emoji) can sit right after the title.
+_TEXAS_FLAG_SVG = (
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 18' "
+    "width='27' height='18' role='img' aria-label='Texas flag'>"
+    "<rect width='27' height='18' fill='#FFFFFF'/>"
+    "<rect x='13.5' y='9' width='13.5' height='9' fill='#BF0D3E'/>"
+    "<rect width='10' height='18' fill='#002868'/>"
+    "<polygon points='5,4.6 6.1,7 8.7,7 6.7,8.7 7.3,11 5,9.5 2.7,11 3.3,8.7 "
+    "1.3,7 3.9,7' fill='#FFFFFF'/>"
+    "</svg>"
+)
+st.markdown(
+    f'<h1 style="color:{PRIMARY_RED}; margin-bottom:0;">🇺🇸 Life Policy Pilot Navigator '
+    f'{_TEXAS_FLAG_SVG}</h1>',
+    unsafe_allow_html=True,
+)
 st.caption("Interactive navigation & guidance for life insurance concepts.")
 
 # ----------------------- Chat -----------------------

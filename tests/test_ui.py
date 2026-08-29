@@ -67,6 +67,19 @@ def test_app_boots_without_secrets_file() -> None:
     assert at.session_state["messages"] == []
 
 
+def test_header_renders_texas_flag_svg() -> None:
+    """The header title must show the actual Texas flag (inline SVG), not a star."""
+    at = start_app()
+    at.run()
+    assert len(at.exception) == 0
+    header = [m.value for m in at.markdown if "Life Policy Pilot Navigator" in m.value]
+    assert header, "header title not rendered"
+    assert "aria-label='Texas flag'" in header[0]
+    assert "#002868" in header[0]  # the flag's blue stripe
+    assert "#BF0D3E" in header[0]  # the flag's red stripe
+    assert "⭐" not in header[0] and "🌟" not in header[0]
+
+
 def test_chat_renders_answer_and_meta() -> None:
     at = start_app()
     with mock.patch("api_client.requests.post", return_value=FakeResponse(200, SAMPLE_RESPONSE)):
