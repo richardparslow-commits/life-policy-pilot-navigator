@@ -29,7 +29,7 @@ EDUCATIONAL_NOTICE = (
 
 st.set_page_config(
     page_title="Life Policy Pilot | Navigator",
-    page_icon="🧭",
+    page_icon="🇺🇸",
     layout="centered",
     initial_sidebar_state="expanded",
 )
@@ -161,7 +161,7 @@ def send_message(text: str) -> None:
 
 # ----------------------- Sidebar -----------------------
 with st.sidebar:
-    st.title("🧭 Life Policy Pilot")
+    st.title("🇺🇸 Life Policy Pilot")
     st.markdown(
         "An interactive guide to life insurance — policies, coverage, "
         "claims, and more. Answers come from our curated FAQ knowledge base."
@@ -175,7 +175,7 @@ with st.sidebar:
     )
 
 # ----------------------- Header -----------------------
-st.title("🧭 Life Policy Pilot Navigator")
+st.title("🇺🇸 Life Policy Pilot Navigator")
 st.caption("Interactive navigation & guidance for life insurance concepts.")
 
 # ----------------------- Chat -----------------------
@@ -188,3 +188,7 @@ for msg in st.session_state.messages:
 
 if prompt := st.chat_input("Ask about life insurance..."):
     send_message(prompt)
+
+# ----------------------- Footer -----------------------
+st.markdown("---")
+st.caption("⭐ Proudly built for the Lone Star State — Texas")
