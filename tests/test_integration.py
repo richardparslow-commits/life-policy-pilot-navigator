@@ -117,6 +117,8 @@ def test_api_client_chats_with_live_backend(backend_url: str) -> None:
     first = data["matched_faq"][0]
     assert first["id"] and first["question"] and first["category"]
     assert isinstance(first["score"], float)
+    # The matched FAQ must include its answer so the UI can render it.
+    assert first["answer"], "matched FAQ is missing its answer text"
     # ...and articles are shaped correctly (may be empty: feed is pinned off)
     assert isinstance(data["recommended_articles"], list)
     for article in data["recommended_articles"]:

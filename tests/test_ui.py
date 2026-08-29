@@ -20,7 +20,12 @@ SAMPLE_RESPONSE = {
     "disclaimer": "General information only.",
     "booking_url": "https://calendar.app.google/test",
     "matched_faq": [
-        {"question": "What is term life insurance?", "category": "policies", "score": 0.9}
+        {
+            "question": "What is term life insurance?",
+            "category": "policies",
+            "score": 0.9,
+            "answer": "Term life covers you for a fixed period of time.",
+        }
     ],
     "recommended_articles": [
         {"title": "Term Life Basics", "url": "https://lifepolicypilot.blog/term-life/"}
@@ -80,6 +85,8 @@ def test_chat_renders_answer_and_meta() -> None:
     assert any("Educational use only" in c.value for c in at.caption)
     assert any("Related FAQs" in e.label for e in at.expander)
     assert any("Recommended articles" in e.label for e in at.expander)
+    # The related-FAQ entry shows its answer text, not just the title.
+    assert any("Term life covers you for a fixed period" in m.value for m in at.markdown)
 
 
 def test_chat_retries_once_then_succeeds() -> None:

@@ -90,7 +90,13 @@ def render_faq_matches(matched: List[Dict[str, Any]]) -> None:
         for m in matched:
             st.markdown(f"**{m.get('question', '')}**")
             if m.get("category"):
-                st.caption(f"Category: {m['category']}  ·  Match: {m.get('score', 0):.0%}")
+                # Scores can exceed 1.0 because of retrieval boosts, so cap the
+                # displayed confidence at 100%.
+                match = min(m.get("score", 0), 1.0)
+                st.caption(f"Category: {m['category']}  ·  Match: {match:.0%}")
+            answer = m.get("answer")
+            if answer:
+                st.markdown(answer)
             st.markdown("---")
 
 
