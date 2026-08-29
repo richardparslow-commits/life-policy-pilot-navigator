@@ -192,7 +192,11 @@ st.markdown(
     f'{_TEXAS_FLAG_SVG}</h1>',
     unsafe_allow_html=True,
 )
-st.caption("Interactive navigation & guidance for life insurance concepts.")
+st.caption(
+    "⚠️ For educational and informational purposes only. This tool is not "
+    "financial, legal, or tax advice and is not a recommendation to buy or "
+    "sell any insurance product."
+)
 
 # ----------------------- Chat -----------------------
 for msg in st.session_state.messages:

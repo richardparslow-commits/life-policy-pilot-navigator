@@ -80,6 +80,17 @@ def test_header_renders_texas_flag_svg() -> None:
     assert "⭐" not in header[0] and "🌟" not in header[0]
 
 
+def test_header_shows_educational_disclaimer() -> None:
+    """The header subtitle must be the educational-reminder disclaimer."""
+    at = start_app()
+    at.run()
+    assert len(at.exception) == 0
+    captions = [c.value for c in at.caption]
+    assert any("For educational and informational purposes only" in c for c in captions)
+    assert any("not financial, legal, or tax advice" in c for c in captions)
+    assert not any("Interactive navigation & guidance" in c for c in captions)
+
+
 def test_chat_renders_answer_and_meta() -> None:
     at = start_app()
     with mock.patch("api_client.requests.post", return_value=FakeResponse(200, SAMPLE_RESPONSE)):
